@@ -143,7 +143,14 @@ module.exports.download = (url, dest = './', args = []) ->
     else if (pos = data.indexOf '[download] ') is 0
       state = 'download'
       filename = data.substring(24, data.length - 1)
-      
+
+    # about to extract audio
+    else if (pos = data.indexOf '[ffmpeg] ') is 0
+      state = 'ffmpeg'
+      filename = data.substring(22, data.length - 1)
+      emitter.emit state,
+        filename: filename
+
     # check if this is any other state
     else if (pos = data.indexOf ']') isnt -1
       state = data.substring pos + 2, data.length - 1
