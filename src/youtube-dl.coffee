@@ -170,7 +170,11 @@ module.exports.download = (url, dest = './', args = []) ->
       timeTaken         : getHumanTime timeTaken
       averageSpeedBytes : round averageSpeed, 2
       averageSpeed      : getHumanSize(averageSpeed) + '/s'
-  
+
+  # it's possible to stop the underlying process
+  emitter.stop = () ->
+    youtubedl.kill()
+
   emitter
 
 
